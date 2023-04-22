@@ -1,0 +1,3 @@
+rabin-karp.cpp:4:11: error: expected initializer before '-' token
+    4 | void rabin-karp(){
+      |           ^
