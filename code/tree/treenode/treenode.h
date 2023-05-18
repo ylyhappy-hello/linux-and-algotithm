@@ -5,7 +5,7 @@ class TreeNode {
   int no;
   int mindeep = 999;
   TreeNode();
-  TreeNode(int);
+  TreeNode(int no);
   void InOrderWalk(TreeNode* root);
   void PreOrderWalk(TreeNode* root);
   void PosOrderWalk(TreeNode* root);

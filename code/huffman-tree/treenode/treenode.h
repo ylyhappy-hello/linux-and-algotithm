@@ -1,5 +1,13 @@
+
+
 class TreeNode {
  public:
+  struct NodeInt {
+    int x;
+    TreeNode* node;
+    // 重载小于号运算符
+    bool operator >(const NodeInt b) const { return x > b.x; }
+  };
   TreeNode* left;
   TreeNode* right;
   int weight = 0;
@@ -7,6 +15,7 @@ class TreeNode {
   int mindeep = 999;
   TreeNode();
   TreeNode(int);
+  TreeNode* WithWeight(int weight);
   void InOrderWalk(TreeNode* root);
   void PreOrderWalk(TreeNode* root);
   void PosOrderWalk(TreeNode* root);
@@ -15,5 +24,5 @@ class TreeNode {
   int getHeight(TreeNode* node);
   int getDeep(TreeNode* node, int d);
   void buildHuffman();
-  TreeNode* buildHuffman(int lw, int rw);
+  TreeNode* buildHuffman(NodeInt lw, NodeInt rw);
 };

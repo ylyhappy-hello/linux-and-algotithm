@@ -9,7 +9,6 @@ using std::stack;
 using std::vector;
 
 #include "treenode.h"
-
 TreeNode::TreeNode() {
   this->left = nullptr;
   this->right = nullptr;
@@ -21,10 +20,11 @@ TreeNode::TreeNode(int no) {
   this->no = no;
 }
 
-TreeNode::TreeNode(int weight) {
-  this->left = nullptr;
-  this->right = nullptr;
-  this->weight = weight;
+TreeNode* TreeNode::WithWeight(int weight) {
+  TreeNode* t = new TreeNode();
+  t->weight = weight;
+  t->no = weight;
+  return t;
 }
 
 void TreeNode::InOrderWalk(TreeNode* root) {
@@ -76,6 +76,10 @@ void TreeNode::PreOrderWalk(TreeNode* root) {
 }
 
 void TreeNode::PosOrderWalk(TreeNode* root) {
+  if (root == nullptr){
+    cout << "root 为空" << endl;
+    return ;
+  }
   vector<int> res;
   stack<TreeNode*> st;
   TreeNode* t = root;
@@ -148,20 +152,41 @@ int TreeNode::getDeep(TreeNode* node, int d) {
 }
 
 void TreeNode::buildHuffman(){
-  vector<int> wa {7, 5, 2, 4};
-  std::priority_queue<int, std::deque<int>, std::greater<int>> wa_min_pq(wa.begin(), wa.end());
-  while (!wa_min_pq.empty()){
-    int lw = wa_min_pq.top();
-    wa_min_pq.pop();
-    int rw = wa_min_pq.top();
-    wa_min_pq.pop();
-    wa_min_pq.push(lw + rw);
-    TreeNode* root = this.buildHuffman(int lw, rw);
+  vector<int> wa {7, 5, 4, 2, 4};
+  vector<NodeInt> wa_node;
+  for (auto x : wa){
+    wa_node.push_back({x, nullptr});
   }
+  std::priority_queue<NodeInt, std::deque<NodeInt>, std::greater
+      <NodeInt>> wa_min_pq(wa_node.begin(), wa_node.end());
+  TreeNode* root_temp = nullptr;
+  while (!wa_min_pq.empty()){
+    NodeInt lw = wa_min_pq.top();
+    wa_min_pq.pop();
+    if (wa_min_pq.empty()) break;
+    NodeInt rw = wa_min_pq.top();
+    wa_min_pq.pop();
+    this->PosOrderWalk(root_temp);
+    cout << "ssss" << endl;
+    TreeNode* root = this->buildHuffman(lw, rw);
+    root_temp = root;
+    this->PosOrderWalk(root_temp);
+    this->InOrderWalk(root_temp);
+    wa_min_pq.push({lw.x + rw.x, root});
+  }
+  this->PosOrderWalk(root_temp);
 }
-TreeNode* TreeNode::buildHuffman(int lw, int rw){
-  TreeNode l(lw), r(rw), root(lw + rw);
-  root.left = &l;
-  root.right = &r;
-  return &root;
+TreeNode* TreeNode::buildHuffman(NodeInt lw, NodeInt rw){
+  cout << "ssss" << "lw " << lw.x << endl;
+  cout << "with" << this->WithWeight(1) << endl;
+  TreeNode* l = (lw.node == nullptr ? this->WithWeight(lw.x) : lw.node);
+  cout << "ssss" << " l " << l << endl;
+  TreeNode* r = (rw.node == nullptr ? this->WithWeight(rw.x) : rw.node);
+  cout << "ssss root" << endl;
+  TreeNode* root = this->WithWeight(lw.x + rw.x);
+  cout << "ssss root" << l << endl;
+  root->left = l;
+  cout << "ssss" << endl;
+  root->right = r;
+  return root;
 }

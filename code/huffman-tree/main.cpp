@@ -20,8 +20,9 @@ int main(){
   // t1.InOrderWalk(&t1);
   // cout << t1.compare(t1.left, t1.right);
   // cout << t1.getHeight(&t1)
-  cout << t1.getDeep(&t1, 0);
-  cout << t1.mindeep;
+  // cout << t1.getDeep(&t1, 0);
+  // cout << t1.mindeep;
+  t1.buildHuffman();
   // t1.InOrderWalk(&t1);
   // t1.PosOrderWalk(&t1);
 }
