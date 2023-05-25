@@ -13,15 +13,19 @@ int main(){
   t8.right = &t10;
   t3.left = &t5;
   t3.right = &t4;
+  cout << "树结构 \n";
+  t1.Print(&t1);
   // t1.PreOrderWalk(&t1);
   // t1.InOrderWalk(&t1);
   // t1.TreeInvert(&t1);
-  // t1.PreOrderWalk(&t1);
-  // t1.InOrderWalk(&t1);
+  t1.PosOrderWalk(&t1);
+  // t1.TreeInvert(&t1);
+  // cout << "反转树结构 \n";
+  // t1.Print(&t1);
   // cout << t1.compare(t1.left, t1.right);
   // cout << t1.getHeight(&t1)
-  cout << t1.getDeep(&t1, 0);
-  cout << t1.mindeep;
+  // cout << t1.getDeep(&t1, 0);
+  // cout << t1.mindeep;
   // t1.InOrderWalk(&t1);
   // t1.PosOrderWalk(&t1);
 }

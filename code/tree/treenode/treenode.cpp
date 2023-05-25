@@ -1,5 +1,7 @@
+#include <math.h>
 #include <algorithm>
 #include <iostream>
+#include <queue>
 #include <stack>
 #include <vector>
 using std::cout;
@@ -131,11 +133,54 @@ int TreeNode::getHeight(TreeNode* node) {
 int TreeNode::getDeep(TreeNode* node, int d) {
   if (node == NULL)
     return d;
-  if (node->left == NULL && node->right == NULL){
+  if (node->left == NULL && node->right == NULL) {
     mindeep = std::min(mindeep, d);
   }
-  cout << node->no << "\t" << d << endl;
+  node->d = d;
+  // cout << node->no << "\t" << d << endl;
   getDeep(node->left, d + 1);
   getDeep(node->right, d + 1);
   return 0;
+}
+void TreeNode::Print(TreeNode* node) {
+  int h = getHeight(node);
+  getDeep(node, 0);
+  std::queue<TreeNode*> q;
+  node->x = std::pow(2, h);
+  node->y = 0;
+  q.push(node);
+  int old_d = 0;
+  int i = 0;
+  while (!q.empty()) {
+    TreeNode* t = q.front();
+    q.pop();
+    if (old_d < t->d){
+      i = 0;
+      cout << "\n";
+    }
+
+    for (; i < std::pow(2, h + 1); i ++){
+      if (t->x == i){
+        cout << t->no;
+        break;
+      } 
+      else cout << " ";
+    }
+
+
+    old_d = t->d;
+    double node_distance = std::pow(2, h) / (t->d + 2);
+    // cout << t->no << " distance" << node_distance;
+    if (t->left != nullptr) {
+      t->left->x = t->x - node_distance / 2;
+      t->left->y = t->y + 1;
+      q.push(t->left);
+    }
+    if (t->right != nullptr) {
+      t->right->x = t->x + node_distance / 2;
+      t->right->y = t->y + 1;
+      q.push(t->right);
+    }
+  }
+  cout << "\n";
 }
